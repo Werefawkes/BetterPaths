@@ -3,6 +3,7 @@ using Jotunn.Configs;
 using Jotunn.Entities;
 using Jotunn.Managers;
 using Jotunn.Utils;
+using System;
 
 namespace BetterPaths
 {
@@ -44,11 +45,12 @@ namespace BetterPaths
 				Name = "piece_stonePathen",
 				PieceTable = PieceTables.Hoe,
 				Category = PieceCategories.Misc,
-				CraftingStation = CraftingStations.None
+				CraftingStation = CraftingStations.None,
 			};
-			path.AddRequirement(new RequirementConfig("PathingStone", 1));
+			path.AddRequirement(new RequirementConfig("Stone", 1));
+			CustomPiece stonePathen = new CustomPiece("Stone Pathen", "paved_road_v2", path);
 
-			PieceManager.Instance.AddPiece(new CustomPiece("Stone Pathen", "paved_road_v2", path));
+			PieceManager.Instance.AddPiece(stonePathen);
 
 			PrefabManager.OnVanillaPrefabsAvailable -= AddClonedItems;
 		}
