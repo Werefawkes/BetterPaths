@@ -49,6 +49,8 @@ namespace BetterPaths
 			};
 			path.AddRequirement(new RequirementConfig("Stone", 1));
 			CustomPiece stonePathen = new CustomPiece("Stone Pathen", "paved_road_v2", path);
+			stonePathen.Piece.m_craftingStation = null;
+			Jotunn.Logger.LogDebug($"Crafting station: {stonePathen.Piece.m_craftingStation}");
 
 			PieceManager.Instance.AddPiece(stonePathen);
 
