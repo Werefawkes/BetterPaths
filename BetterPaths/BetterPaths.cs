@@ -77,27 +77,33 @@ namespace BetterPaths
 			List<TerrainComp> tcs = TerrainComp.s_instances;
 			foreach (TerrainComp tc in tcs)
 			{
-				
-			}
-
-			Color[] mainPixels = new Color[mapSize];
-			
-			foreach (Piece p in Piece.s_allPieces)
-			{
-				//Vector2 coords = MinimapManager.Instance.WorldToOverlayCoords(p.GetCenter(), overlay.TextureSize);
-				//overlay.OverlayTex.SetPixel((int)coords.x, (int)coords.y, Color.red);
-				//Jotunn.Logger.LogInfo($"Marking piece {p.m_name} at {p.GetCenter()}, or {p.transform.position}. This is at {coords} on the minimap.");
-
-				if (p.m_groundPiece)
+				Jotunn.Logger.LogInfo($"paintmask length: {tc.m_paintMask.Length}, size: {tc.m_size}, width: {tc.m_width}");
+				for (int i = 1; i < tc.m_paintMask.Length; i++)
 				{
-					Vector2 coords = MinimapManager.Instance.WorldToOverlayCoords(p.transform.position, overlay.TextureSize);
-					overlay.OverlayTex.SetPixel((int)coords.x, (int)coords.y, Color.red);
-					Jotunn.Logger.LogInfo($"Marking piece {p.m_name} at {p.transform.position}. This is at {coords} on the minimap.");
-
-					//int index = (int)(coords.x * coords.y);
-					//mainPixels[index] = Color.red;
+					Vector3 position = tc.transform.position;
+					position.x += i % tc.m_width;
+					position.z += i / tc.m_width;
+					Vector2 coords = MinimapManager.Instance.WorldToOverlayCoords(position, overlay.TextureSize);
+					overlay.OverlayTex.SetPixel((int)coords.x, (int)coords.y, tc.m_paintMask[i]);
 				}
 			}
+
+			//foreach (Piece p in Piece.s_allPieces)
+			//{
+			//	//Vector2 coords = MinimapManager.Instance.WorldToOverlayCoords(p.GetCenter(), overlay.TextureSize);
+			//	//overlay.OverlayTex.SetPixel((int)coords.x, (int)coords.y, Color.red);
+			//	//Jotunn.Logger.LogInfo($"Marking piece {p.m_name} at {p.GetCenter()}, or {p.transform.position}. This is at {coords} on the minimap.");
+
+			//	if (p.m_groundPiece)
+			//	{
+			//		Vector2 coords = MinimapManager.Instance.WorldToOverlayCoords(p.transform.position, overlay.TextureSize);
+			//		overlay.OverlayTex.SetPixel((int)coords.x, (int)coords.y, Color.red);
+			//		Jotunn.Logger.LogInfo($"Marking piece {p.m_name} at {p.transform.position}. This is at {coords} on the minimap.");
+
+			//		//int index = (int)(coords.x * coords.y);
+			//		//mainPixels[index] = Color.red;
+			//	}
+			//}
 
 			//overlay.OverlayTex.SetPixels(mainPixels);
 			overlay.OverlayTex.Apply();
